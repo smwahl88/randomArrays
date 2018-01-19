@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Random number generator tester</title>
+		<script type = "text/javascript" src="randomArray.js"></script>
+	</head>
+	<body>
+		<div id="buttons"  align="center">
+			<button onclick="randomArrayTest()">Run Random Test</button>
+			<button onclick="runUnitTests()">Run Unit Tests</button>
+		</div>
+		<div  align="center">
+			<table id="results" style="text-align:center; width: 100%; border: 1px solid black; border-collapse: collapse;">
+				<tr>
+					<th style="border: 1px solid black;">Test Input</th>
+					<th style="border: 1px solid black;">Test Median</th>
+					<th style="border: 1px solid black;">Test 75th Percentile</th>
+					<th style="border: 1px solid black;">Pass/Fail</th>
+				</tr>
+			</table>
+		</div>
+		<script>
+		
+			/*
+			 * Function to test random array
+			 */
+			function randomArrayTest(){
+			
+				var results = runRandomArray();
+				displayResults(results[0],results[1],results[2], "N\A");
+			
+			}
+			
+			/*
+			 * Function to run unit test
+			 */
+			function runUnitTests(){
+				test_simple_sorted();
+				test_simple_unsorted();
+				test_empty_array();
+				test_bad_input();
+				test_negative_values();
+				test_mixed_signed_values();
+				test_array_same_values();
+				test_array_size_one();
+			}
+			
+			
+			/*
+			 * Builds a table entry based on results
+			 */
+			function displayResults(input,median,p, result){
+				var results = document.getElementById("results");
+				var row = document.createElement("tr");
+				
+				var htmlInput = document.createElement("td");
+				htmlInput.style.border = "1px solid black";
+				htmlInput.appendChild(document.createTextNode(input.toString()));
+				
+				var htmlMedian = document.createElement("td");
+				htmlMedian.style.border = "1px solid black";
+				htmlMedian.appendChild(document.createTextNode(median));
+				
+				var htmlP = document.createElement("td");
+				htmlP.style.border = "1px solid black";
+				htmlP.appendChild(document.createTextNode(p));
+				
+				var htmlResult = document.createElement("td");
+				htmlResult.style.border = "1px solid black";
+				htmlResult.appendChild(document.createTextNode(result));
+				
+				if (result == "Pass")
+				{
+					htmlResult.style.color = "Green";
+				}
+				else if (result == "Fail")
+				{
+					htmlResult.style.color = "Red";
+				}
+				
+				row.appendChild(htmlInput);
+				row.appendChild(htmlMedian);
+				row.appendChild(htmlP);
+				row.appendChild(htmlResult);
+				
+				results.appendChild(row);
+			}
+			
+			/***********************************
+			 ********** UNIT TESTS **************
+			 ***********************************/
+			
+			function test_simple_sorted(){
+				var arr = [1,2,3,4];
+				var expectedMedian = 2.5;
+				var expectedP = 3.5;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}
+			
+			function test_simple_unsorted(){
+				var arr = [12,46,32,55];
+				var expectedMedian = 39;
+				var expectedP = 50.5;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}
+			
+			function test_empty_array(){
+				var results = runArray([]);
+				var pass = "Fail";
+				
+				if (results.length ==  0){
+					pass = "Pass";
+				}
+				
+				displayResults("Empty Array", "N/A", "N/A", pass);
+			}
+			
+			function test_bad_input(){
+				var arr = ["dog","cat","bird"];
+				var results = runArray(arr);
+				var pass = "Fail";
+				
+				if (results.length ==  0){
+					pass = "Pass";
+				}
+				
+				displayResults(arr, "N/A", "N/A", pass);
+			}
+			
+			function test_negative_values(){
+				var arr = [-12,-46,-32,-55];
+				var expectedMedian = -39;
+				var expectedP = -22;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}
+			
+			function test_mixed_signed_values(){
+				var arr = [120,-486, 78,-47, -22, 18, 0];
+				var expectedMedian = 0;
+				var expectedP = 48;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}
+			
+			function test_array_same_values(){
+				var arr = [9,9,9,9,9,9,9,9,9];
+				var expectedMedian = 9;
+				var expectedP = 9;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}
+			
+			function test_array_size_one(){
+				var arr = [5];
+				var expectedMedian = 5;
+				var expectedP = 5;
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results [1] == expectedMedian && results[2] == expectedP){
+					pass = "Pass";
+				}
+				
+				displayResults(results[0], results[1], results[2], pass);
+			}		
+		</script>
+		<noscript> "This page requires javaScript to run!" </noscript>
+	<body>
+</html>
