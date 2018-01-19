@@ -10,6 +10,7 @@
 			<button onclick="runUnitTests()">Run Unit Tests</button>
 		</div>
 		<div  align="center">
+			<br>
 			<table id="results" style="text-align:center; width: 100%; border: 1px solid black; border-collapse: collapse;">
 				<tr>
 					<th style="border: 1px solid black;">Test Input</th>
@@ -35,6 +36,22 @@
 			 * Function to run unit test
 			 */
 			function runUnitTests(){
+			
+				//calculatePercentile(array[number], percentile) tests
+				test_percentile_invalid_array_arg();
+				test_percentile_invalid_number_arg();
+				test_percentile_empty_array();
+				test_percentile_number_outofbound();
+				test_percentile_correct();
+				
+				//getRandomInt(min,max)
+				test_min_gt_max();
+				test_min_eq_max();
+				test_min_nan();
+				test_max_nan();
+				test_randInt_correct();
+				
+				//runArray(array[number]) tests
 				test_simple_sorted();
 				test_simple_unsorted();
 				test_empty_array();
@@ -43,6 +60,7 @@
 				test_mixed_signed_values();
 				test_array_same_values();
 				test_array_size_one();
+				test_mixed_array_type();
 			}
 			
 			
@@ -89,6 +107,106 @@
 			/***********************************
 			 ********** UNIT TESTS **************
 			 ***********************************/
+			
+			/*
+			* calculatePercentile(array[number], percentile) tests
+			*/
+			function test_percentile_invalid_array_arg(){
+				var p = calculatePercentile(5, 0.5);
+				var pass = "Fail"
+				if (p == Number.MIN_VALUE)
+				{
+					pass = "Pass";
+				}
+				displayResults("percentile_invalid_array_arg", "NA", "NA", pass);
+			}
+			function test_percentile_invalid_number_arg(){
+				var p = calculatePercentile([1,2,3], "invalid");
+				var pass = "Fail"
+				if (p == Number.MIN_VALUE)
+				{
+					pass = "Pass";
+				}
+				displayResults("percentile_invalid_number_arg", "NA", "NA", pass);
+			}
+			function test_percentile_empty_array(){
+				var p = calculatePercentile([], 0.5);
+				var pass = "Fail"
+				if (p == Number.MIN_VALUE)
+				{
+					pass = "Pass";
+				}
+				displayResults("percentile_empty_array", "NA", "NA", pass);
+			}
+			function test_percentile_number_outofbound(){
+				var p = calculatePercentile([1,2,3], -1);
+				var pass = "Fail"
+				if (p == Number.MIN_VALUE)
+				{
+					pass = "Pass";
+				}
+				displayResults("percentile_empty_array", "NA", "NA", pass);
+			}
+			
+			function test_percentile_correct(){
+				var p = calculatePercentile([1,2,3], 0.5);
+				var pass = "Fail"
+				if (p == 2)
+				{
+					pass = "Pass";
+				}
+				displayResults("percentile_empty_array", p, "NA", pass);
+			}
+			
+			
+			/*
+			 * getRandomInt(min,max)
+			 */
+				function test_min_gt_max(){
+					var num = getRandomInt(10,5);
+					var pass = "Fail";
+					if( num == Number.MIN_VALUE){
+						pass = "Pass";
+					}
+					displayResults("test_min_gt_max", "NA", "NA", pass);
+				}
+				function test_min_eq_max(){
+					var num = getRandomInt(9,9);
+					var pass = "Fail";
+					if( num == 9 ){
+						pass = "Pass";
+					}
+					displayResults("test_min_eq_max", "NA", "NA", pass);
+				}
+				
+				function test_min_nan(){
+					var num = getRandomInt("error",1);
+					var pass = "Fail";
+					if( num == Number.MIN_VALUE){
+						pass = "Pass";
+					}
+					displayResults("test_min_nan", "NA", "NA", pass);
+				}
+				function test_max_nan(){
+					var num = getRandomInt(1,"error");
+					var pass = "Fail";
+					if( num == Number.MIN_VALUE){
+						pass = "Pass";
+					}
+					displayResults("test_max_nan", "NA", "NA", pass);
+				}
+				function test_randInt_correct(){
+					var num = getRandomInt(-40,500);
+					var pass = "Fail";
+					if( num >= -40 && num <= 500){
+						pass = "Pass";
+					}
+					displayResults("test_randInt_correct", "NA", "NA", pass);
+				}
+			
+			/*
+			* runArray(array[number]) tests
+			*/
 			
 			function test_simple_sorted(){
 				var arr = [1,2,3,4];
@@ -202,6 +320,19 @@
 				
 				displayResults(results[0], results[1], results[2], pass);
 			}		
+			
+			function test_mixed_array_type(){
+				var arr = [5, "Hello World", 1, 5, 6.5];
+				var pass = "Fail";
+				
+				var results = runArray(arr);
+				
+				if (results.length == 0){
+					pass = "Pass";
+				}
+				
+				displayResults(arr, "NA" , "NA", pass);
+			}
 		</script>
 		<noscript> "This page requires javaScript to run!" </noscript>
 	<body>
