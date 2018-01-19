@@ -15,6 +15,6 @@ Write a program that:
 
 #Todo
 1) Write unit test for the following functions
-	a) generateRandomInt()
-	b) calculatePercentile()
+- generateRandomInt()
+- calculatePercentile()
 2) Write a .css file
