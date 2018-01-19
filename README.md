@@ -12,9 +12,3 @@ Write a program that:
 2) Open home.html
 3) Click Run Random Test to generate and display results for a random array
 4) Click run Unit tests to run unit tests.
-
-# Todo
-1) Write unit test for the following functions
-	- generateRandomInt()
-	- calculatePercentile()
-2) Write a .css file
