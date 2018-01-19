@@ -25,7 +25,7 @@ function runRandomArray(){
 	var arr = generateRandomArray();
 	var median = calculatePercentile(arr, 0.5);
 	var p = calculatePercentile(arr, PERCENTILE );
-	return([arr.sort(numberSort), median,p]);
+	return [arr, median,p];
 }
 
 
