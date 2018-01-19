@@ -17,3 +17,4 @@ Write a program that:
 1) Write unit test for the following functions
 	a) generateRandomInt()
 	b) calculatePercentile()
+2) Write a .css file
