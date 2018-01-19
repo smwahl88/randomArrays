@@ -1,3 +1,11 @@
+/*
+ * Filename: randomArray.js
+ * Author: Sean Wahl
+ * Email: smwahl88@gmail.com
+ * Description: program for generating random array and calculating median
+ * 	and percentiles of given array[numbers]
+ */
+
 var MIN_ARRAY_SIZE = 1; //smallest array for random array
 var MAX_ARRAY_SIZE = 10; // largest array for random array
 
@@ -8,9 +16,10 @@ var PERCENTILE = 0.75; //percentile to find, defined as 75%
 
 /*
  * runRandom()
- * return tye: none
- * description: when called this will generate a random array and 
- * calculate the median and 75th percentile of the array
+ * Return Type: array[array[number], number, number]
+ * Return Error: array[] empty array
+ * Description: when called this will generate a random array and 
+ * 	calculate the median and 75th percentile of the array
  */
 function runRandomArray(){
 	var arr = generateRandomArray();
@@ -21,18 +30,23 @@ function runRandomArray(){
 
 
 /*
- * runArray(arr)
- * return type: array[median, percentile] array will be empty on error
- * description: when called this ill take the given arr
- * calculate the median and 75th percentile of the array on error
+ * runArray(array[number])
+ * Return Type: array[median, percentile] 
+ * Return Error: array[] empty array
+ * Description: when called this ill take the given arr
+ * 	calculate the median and 75th percentile of the array on error
  */
 function runArray(arr){
 	try {
-		if (arr.some(isNaN)){
+		if (!Array.isArray(arr))
+		{
+			throw "Arg is not an array!";
+		}
+		else if (arr.some(isNaN)){
 			throw "Array must contain numbers only!";
 		}
-		if (arr.length == 0){
-			throw "Array is empty"
+		else if (arr.length == 0){
+			throw "Array is empty";
 		}
 	}
 	catch(err) {
@@ -49,9 +63,10 @@ function runArray(arr){
 
 /*
  * generateRandomArray()
- * return type: array[number]
- * description: when turn this will generate a random array from size 
- * (MAX_ARRAY_SIZE to MAX_ARRAY_SIZE) with values of (MAX_VALUE to MIN_VALUE)
+ * Return Type: array[number]
+ * Return Error: none
+ * Description: when turn this will generate a random array from size 
+ * 	(MAX_ARRAY_SIZE to MAX_ARRAY_SIZE) with values of (MAX_VALUE to MIN_VALUE)
  */
 function generateRandomArray(){
 	//create an array of random size
@@ -67,14 +82,20 @@ function generateRandomArray(){
 
 /*
  * getRandomInt(number, number)
- * reutun type: number, returns Number.MIN_VALUE on error
- * description: given a min, and max. This will return a value between min and max
+ * Return Type: number
+ * Return Error: Number.MIN_VALUE
+ * Description: given a min, and max. This will return a value between min and max
  */
 function getRandomInt(min, max){
 	//ensure max > min 
 	try{
-		if( max < min){
-			throw "Max array size must be larger than min"
+		
+		if (isNaN(max) || isNaN(min))
+		{
+			throw "Args must be numbers!";
+		}
+		else if( max < min){
+			throw "Max must be larger than min!";
 		}
 	}
 	catch(err){
@@ -88,11 +109,34 @@ function getRandomInt(min, max){
 
 /*
  * calculatePercentile(array[number])
- * return type: number
- * description: when called this will calculate the value at percentile and
- * return said value
+ * Return Type: number
+ * Return Error: Number.MIN_VALUE;
+ * Description: when called this will calculate the value at percentile and
+ * 	return said value
  */
 function calculatePercentile(arr, percentile){
+	try{
+		if(!Array.isArray(arr))
+		{
+			throw "Arg 0 is not an array!";
+		}
+		else if (arr.length == 0){
+			throw "Arg 0 is empty";
+		}
+		else if (isNaN(percentile))
+		{
+			throw "Arg 1 is Not a number";
+		}
+		else if (percentile < 0 || percentile > 1)
+		{
+			throw "Arg 1 is out of bounds [0-1]";
+		}
+	}
+	catch(err){
+		console.log(err)
+		return Number.MIN_VALUE;
+	}
+	
 	arr.sort(numberSort);
 	var index = (arr.length - 1) * percentile;
 	
@@ -108,9 +152,10 @@ function calculatePercentile(arr, percentile){
 
 /*
  * numberSort(number, number)
- * return type: number
+ * Return Type: number
+ * Return Error: none
  * Description: used by sort() to sort numbers by value instead of 
- * alphabetically
+ * 	alphabetically
  */
 function numberSort(x, y){
 	return x - y;
