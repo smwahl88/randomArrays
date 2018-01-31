@@ -9,8 +9,8 @@
 var MIN_ARRAY_SIZE = 1; //smallest array for random array
 var MAX_ARRAY_SIZE = 10; // largest array for random array
 
-var MIN_NUM = -100; //minimum random number to choose
-var MAX_NUM = 100; //maximum random number to choose
+var MIN_NUM = 1; //minimum random number to choose
+var MAX_NUM = 10; //maximum random number to choose
 
 var PERCENTILE = 0.75; //percentile to find, defined as 75%
 
